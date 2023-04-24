@@ -66,6 +66,15 @@ resource "aws_s3_bucket" "state" {
   tags = var.tags
 }
 
+resource "aws_s3_bucket_ownership_controls" "terraform_state_s3_bucket_ownership" {
+  bucket = aws_s3_bucket.state.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+
 resource "aws_s3_bucket_acl" "state" {
   bucket = aws_s3_bucket.state.id
   acl    = "private"
